@@ -207,12 +207,20 @@ class Homes extends StatelessWidget {
             label: 'Home',
           ),
           NavigationDestination(
-            icon: Icon(Icons.notifications),
-            label: 'Notifications',
+            icon: Icon(Icons.search),
+            label: 'Search',
           ),
           NavigationDestination(
-            icon: Icon(Icons.message),
-            label: 'Messages',
+            icon: Icon(Icons.shopping_cart),
+            label: 'Shopping',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.settings),
+            label: 'Setting',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.account_circle),
+            label: 'Account',
           ),
         ],
       ),
