@@ -81,7 +81,8 @@ class Homes extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Silahkan Login Terlebih Dahulu')),
+                  const SnackBar(
+                      content: Text('Silahkan Login Terlebih Dahulu')),
                 );
               },
             ),
@@ -91,7 +92,9 @@ class Homes extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Silahkan lapor ke contact jika ada keluhan')),
+                  const SnackBar(
+                      content:
+                          Text('Silahkan lapor ke contact jika ada keluhan')),
                 );
               },
             ),
@@ -103,15 +106,19 @@ class Homes extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 60),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.asset(
-                'assets/img/furnitur1.jpg',
-                width: 550,
-                height: 350,
-                fit: BoxFit.cover,
+            const SizedBox(height: 30),
+            Container(
+              margin: const EdgeInsets.all(16), // Jarak di sekitar container
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(
+                    40), // Border radius lebih besar dan smooth
+                image: DecorationImage(
+                  image: AssetImage('assets/img/furnitur1.jpg'),
+                  fit: BoxFit.cover,
+                ),
               ),
+              width: 550,
+              height: 350,
             ),
             const SizedBox(height: 20),
             Row(
@@ -132,13 +139,21 @@ class Homes extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.arrow_back),
-                  color: Colors.brown,
+                Container(
+                  width: 90,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.arrow_back),
+                    color: Colors.brown,
+                  ),
                 ),
                 const SizedBox(width: 20),
                 Container(
+                  width: 90,
                   decoration: BoxDecoration(
                     color: Colors.brown,
                     borderRadius: BorderRadius.circular(8),
