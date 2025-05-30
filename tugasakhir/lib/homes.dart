@@ -1,14 +1,42 @@
 import 'package:flutter/material.dart';
 
-class Homes extends StatelessWidget {
+class Homes extends StatefulWidget {
   const Homes({super.key});
+
+  @override
+  State<Homes> createState() => _HomesState();
+}
+
+class _HomesState extends State<Homes> {
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
+
+  final List<String> images = [
+    'assets/img/furnitur1.jpg',
+    'assets/img/furnitur2.jpg',
+    'assets/img/furnitur3.jpg',
+  ];
+
+  void _nextPage() {
+    if (_currentPage < images.length - 1) {
+      _currentPage++;
+      _pageController.animateToPage(_currentPage,
+          duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+    }
+  }
+
+  void _prevPage() {
+    if (_currentPage > 0) {
+      _currentPage--;
+      _pageController.animateToPage(_currentPage,
+          duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
-
-      // AppBar
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 2,
@@ -40,8 +68,6 @@ class Homes extends StatelessWidget {
           ),
         ],
       ),
-
-      // Drawer
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -101,35 +127,47 @@ class Homes extends StatelessWidget {
           ],
         ),
       ),
-
-      // Body
       body: SingleChildScrollView(
         child: Column(
           children: [
             const SizedBox(height: 30),
-            Container(
-              margin: const EdgeInsets.all(16), // Jarak di sekitar container
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                    40), // Border radius lebih besar dan smooth
-                image: DecorationImage(
-                  image: AssetImage('assets/img/furnitur1.jpg'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              width: 550,
+            SizedBox(
               height: 350,
+              width: 550,
+              child: PageView.builder(
+                controller: _pageController,
+                itemCount: images.length,
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentPage = index;
+                  });
+                },
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(40),
+                      image: DecorationImage(
+                        image: AssetImage(images[index]),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(5, (index) {
+              children: List.generate(images.length, (index) {
                 return Container(
                   margin: const EdgeInsets.symmetric(horizontal: 3),
-                  width: index == 2 ? 12 : 6,
+                  width: index == _currentPage ? 12 : 6,
                   height: 6,
                   decoration: BoxDecoration(
-                    color: index == 2 ? Colors.brown : Colors.grey.shade300,
+                    color: index == _currentPage
+                        ? Colors.brown
+                        : Colors.grey.shade300,
                     borderRadius: BorderRadius.circular(3),
                   ),
                 );
@@ -146,7 +184,7 @@ class Homes extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: _prevPage,
                     icon: const Icon(Icons.arrow_back),
                     color: Colors.brown,
                   ),
@@ -159,7 +197,7 @@ class Homes extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: _nextPage,
                     icon: const Icon(Icons.arrow_forward),
                     color: Colors.white,
                   ),
@@ -196,12 +234,13 @@ class Homes extends StatelessWidget {
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.brown,
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              onPressed: () {},
+              onPressed: _nextPage,
               child: const Text(
                 'See next',
                 style: TextStyle(color: Colors.white),
@@ -211,11 +250,9 @@ class Homes extends StatelessWidget {
           ],
         ),
       ),
-
-      // Bottom Navigation (statis, tidak bisa berpindah halaman)
       bottomNavigationBar: NavigationBar(
-        selectedIndex: 0, // static
-        destinations: [
+        selectedIndex: 0,
+        destinations: const [
           NavigationDestination(
             selectedIcon: Icon(Icons.home),
             icon: Icon(Icons.home_outlined),
